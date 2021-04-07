@@ -36,14 +36,14 @@ enum LT {
     Right
 }
 
-enum state {
+enum IR_state {
         state1=0x10,
         state2=0x11,
         state3=0x20,
         state4=0x21
     }
 interface KV {
-    key: state;
+    key: IR_state;
     action: Action;
 }
 
@@ -430,7 +430,7 @@ namespace turtleBit {
     }
 
     let irstate:number;
-    let state:number;
+    let IR_state:number;
 
     //% advanced=true shim=maqueenIRV2::irCode
     function irCode(): number {
@@ -448,7 +448,7 @@ namespace turtleBit {
     //% blockId=IR_callbackUserv2 block="on IR received"
     //% draggableParameters
     export function IR_callbackUserV2(cb: (message: number) => void) {
-        state = 1;
+        IR_state = 1;
         control.onEvent(11, 22, function() {
             cb(irstate)
         }) 
@@ -480,7 +480,7 @@ namespace turtleBit {
         //return irCode();
     }
     basic.forever(() => {
-        if(state == 1){
+        if(IR_state == 1){
             irstate = valuotokeyConversion();
             if(irstate != -1){
                 control.raiseEvent(11, 22)
